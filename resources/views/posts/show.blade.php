@@ -15,7 +15,7 @@
         <p>{{ $singlePost->category }}</p>
         <p>{{ $singlePost->genere }}</p>
         <p>{{ $singlePost->description }}</p>
-        <img src="{{ $singlePost->picture }}" alt="copertina di {{ $singleFilm->name_social }}">
+        <img src="{{ $singlePost->picture }}" alt="copertina di {{ $singlePost->name_social }}">
     </div>
     
 </body>
