@@ -43,14 +43,16 @@ class PostController extends Controller
         $data = $request->all();
 
         $post = new Post();
+
+        $this->fillAndSavePost($post, $data);
     
-        $post->name_social = $data['name_social'];
-        $post->category = $data['category'];
-        $post->user = $data['user'];
-        $post->date = $data['date'];
-        $post->picture = $data['picture'];
-        $post->description = $data['description'];
-        $post->save();  // salva nel database
+        // $post->name_social = $data['name_social'];
+        // $post->category = $data['category'];
+        // $post->user = $data['user'];
+        // $post->date = $data['date'];
+        // $post->picture = $data['picture'];
+        // $post->description = $data['description'];
+        // $post->save();  // salva nel database
         
         return redirect()->route('posts.show', $post->id);
     }
@@ -73,9 +75,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($post)
     {
-        //
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -85,9 +87,13 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $post)
     {
-        //
+        $data = $request->all();       
+        
+        $this->fillAndSaveCar($post, $data);
+
+        return redirect()->route('posts.show', $post);
     }
 
     /**
@@ -96,8 +102,19 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('cars.index');
+    }
+
+    private function fillAndSaveCar(Post $post, $data) {
+        $post->name_social = $data['name_social'];
+        $post->category = $data['category'];
+        $post->user = $data['user'];
+        $post->date = $data['date'];
+        $post->picture = $data['picture'];
+        $post->description = $data['description'];
+        $post->save();  // salva nel database
     }
 }
